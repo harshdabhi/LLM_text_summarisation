@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarizer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Text Summarizer</h1>
+            <p>Generate concise summaries of your text using AI</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2>Input Text</h2>
+                <textarea id="input-text" placeholder="Enter your text here..."></textarea>
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="max-length">Maximum Words</label>
+                        <input type="number" id="max-length" value="130" min="30" max="500">
+                    </div>
+                    <div class="control-group">
+                        <label for="min-length">Minimum Words</label>
+                        <input type="number" id="min-length" value="30" min="10" max="200">
+                    </div>
+                    <button id="summarize-btn" onclick="summarizeText()">
+                        <span>Summarize</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h2>Summary</h2>
+                <textarea id="output-text" readonly placeholder="Your summary will appear here..."></textarea>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="original-words">0</div>
+                        <div class="stat-label">Original Words</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="summary-words">0</div>
+                        <div class="stat-label">Summary Words</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            Generating summary...
+        </div>
+
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        async function summarizeText() {
+            const inputText = document.getElementById('input-text').value;
+            const maxLength = document.getElementById('max-length').value;
+            const minLength = document.getElementById('min-length').value;
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const summarizeBtn = document.getElementById('summarize-btn');
+
+            if (!inputText) {
+                showError('Please enter some text to summarize');
+                return;
+            }
+
+            try {
+                loading.style.display = 'block';
+                error.style.display = 'none';
+                summarizeBtn.disabled = true;
+
+                const response = await fetch('/summarize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: inputText,
+                        max_length: maxLength,
+                        min_length: minLength
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('output-text').value = data.summary;
+                    document.getElementById('original-words').textContent = data.original_length;
+                    document.getElementById('summary-words').textContent = data.summary_length;
+                } else {
+                    showError(data.error || 'An error occurred while summarizing the text');
+                }
+            } catch (err) {
+                showError('An error occurred while connecting to the server');
+            } finally {
+                loading.style.display = 'none';
+                summarizeBtn.disabled = false;
+            }
+        }
+
+        function showError(message) {
+            const error = document.getElementById('error');
+            error.textContent = message;
+            error.style.display = 'block';
+        }
+    </script>
+</body>
+</html> 
