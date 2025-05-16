@@ -14,18 +14,18 @@ This project provides a simple and efficient way to generate summaries of text u
 
 ## Video Demonstration
 
-https://github.com/yourusername/llm_summarisation/assets/your-user-id/demo-video.mp4
+https://github.com/harshdabhi/LLM_text_summarisation/docs/media/demo.mp4
 
 [Click here to watch the full demonstration ](docs/media/demo.mp4)
 
-[video](docs/media/demo.mov)
+[video](docs/media/demo.mp4)
 
 ## Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/llm_summarisation.git
+https://github.com/harshdabhi/LLM_text_summarisation
 cd llm_summarisation
 ```
 
