@@ -14,7 +14,7 @@ This project provides a simple and efficient way to generate summaries of text u
 
 ## Video Demonstration
 
-[![Watch the demo](https://img.youtube.com/vi/cL311AoBrDs/0.jpg)](https://youtu.be/cL311AoBrDs)
+[![Watch the demo](https://img.youtube.com/vi/UC2pzhdhVRU/0.jpg)](https://youtu.be/UC2pzhdhVRU)
 
 Installation
 
