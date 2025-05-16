@@ -97,8 +97,6 @@ llm_summarisation/
 │   └── templates/      # HTML templates
 │       └── index.html
 ├── tests/              # Test files
-├── docs/              # Documentation
-│   └── media/         # Media files (videos, images)
 ├── data/              # Data directory
 ├── requirements.txt   # Project dependencies
 └── README.md         # This file
